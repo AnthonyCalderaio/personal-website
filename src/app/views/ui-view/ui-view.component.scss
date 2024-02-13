@@ -1,0 +1,38 @@
+.ui-cards {
+    background-color: grey;
+    // height: 200px;
+    border: 2px solid yellow;
+    border-radius: 22px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+img {
+    height: 100%;
+    width: 300px;
+    cursor: pointer;
+}
+
+.card-format {
+    display: flex;
+}
+
+.card-text-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.card-title {
+    text-align: center;
+    background-color: lightgray;
+    margin: 0px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-description {
+    text-align: center;
+}

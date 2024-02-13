@@ -1,0 +1,11 @@
+<div class="ui-view-container">
+    <div *ngFor="let card of uiCards" class="ui-cards">
+        <div class="card-format">
+            <img (click)="navigate(card.link)" [src]="card.img">
+            <div class="card-text-container">
+                <p class="card-title">{{card.title}}</p>
+                <p class="card-description">{{card.description}}</p>
+            </div>
+        </div>
+    </div>
+</div>
