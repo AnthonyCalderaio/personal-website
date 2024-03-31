@@ -1,16 +1,3 @@
-<div class="ui-view-container">
-    <div *ngFor="let card of mlCards" class="ml-cards">
-        <div class="card-format">
-            <!-- <img [src]="card.img"> -->
-            <div class="card-text-container">
-                <p class="card-title">{{card.title}}</p>
-                <p class="card-description">{{card.description}}</p>
-                <p *ngIf="card?.response; else loading" class="prediction">{{card?.response}}</p>
-                <ng-template #loading>
-                    <app-loading-indicator [loading]="!card?.response" class="prediction"></app-loading-indicator>
-                </ng-template>
-                <p></p>
-            </div>
-        </div>
-    </div>
+<div *ngFor="let card of mlCards">
+    <app-project-card [cardData]="card" [cardType]="card.type"></app-project-card>
 </div>

@@ -1,4 +1,4 @@
-.ml-cards {
+.cards-container {
     background-color: grey;
     border: 2px solid yellow;
     border-radius: 22px;
@@ -40,4 +40,14 @@ img {
 
 .prediction {
     text-align: center;
+}
+
+.interactive-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-type-button {
+    height: 100%; width: 85px;
 }
