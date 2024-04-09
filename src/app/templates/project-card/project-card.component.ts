@@ -1,7 +1,6 @@
 import { CommonModule, NgTemplateOutlet } from '@angular/common';
-import { Component, ElementRef, Input, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { LoadingIndicatorComponent } from '../../widgets/loading-indicator/loading-indicator.component';
-import { HttpClient } from '@angular/common/http';
 import { LinkService } from '../../services/link.service';
 import { Observable } from 'rxjs';
 
@@ -13,24 +12,42 @@ import { Observable } from 'rxjs';
   styleUrl: './project-card.component.scss'
 })
 export class ProjectCardComponent {
-  @ViewChild('cardInput') cardInput: ElementRef;
   @Input() cardData: any;
   @Input() cardType: string;
 
   responseData$: Observable<any>;
 
-  constructor(private httpClient: HttpClient, public linkService: LinkService){ }
+  uploadedFile: any;
+
+  constructor(public linkService: LinkService) { }
 
   @Input() test: any;
 
   // InputType - get data from api
-  fetchData(){
-    let inputValue = this.cardInput?.nativeElement?.value;
-    if(this.cardData.id === 'fake_or_not'){
-      this.responseData$ = this.linkService.sendData({"review":inputValue})
+  fetchData() {
+    let inputValue = (document.getElementById(this.cardData.id + '-input') as HTMLInputElement).value;
+    if (this.cardData.id === 'fake_or_not_single') {
+      this.responseData$ = this.linkService.sendData({ "review": inputValue })
       return;
     }
     this.responseData$ = this.linkService.sendData(inputValue)
+  }
+
+  onUpload() {
+    const formData = new FormData();
+    formData.append('file', this.uploadedFile);
+    this.linkService.sendCSV(formData)
+      .subscribe((data: any) => { this.downloadCSV(data) })
+  }
+
+  downloadCSV(data: any) {
+    const blob = new Blob([data], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    window.open(url);
+  }
+
+  onChange(event: any) {
+    this.uploadedFile = event?.target?.files[0];
   }
 
 }

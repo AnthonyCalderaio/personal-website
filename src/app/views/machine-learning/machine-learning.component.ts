@@ -26,11 +26,18 @@ export class MachineLearningComponent implements OnInit {
       type: 'display'
     },
     {
-      title: 'Fake or not',
+      title: 'Fake or Not',
       description: 'Enter a comment for an item and the trained model will tell you if its fake or not.',
       plot: undefined,
-      id: 'fake_or_not',
+      id: 'fake_or_not_single',
       type: 'input'
+    },
+    {
+      title: 'Fake or Not (Bulk)',
+      description: 'Enter a CSV file where one column is \'review\'s. of all strings. This will output a column of \'fake\' with the value of 0 for real and 1 for fake.',
+      plot: undefined,
+      id: 'fake_or_not_bulk',
+      type: 'upload'
     }
   ]
 

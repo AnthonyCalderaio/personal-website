@@ -27,4 +27,8 @@ export class LinkService {
   sendData(body: any){
     return this.httpClient.post(this.baseUrl+'/fake_or_not',body);
   }
+
+  sendCSV(formData: any){
+    return this.httpClient.post(this.baseUrl+'/fake_or_not_bulk', formData, { responseType: 'blob' });
+  }
 }
