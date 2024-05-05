@@ -1,4 +1,4 @@
-name: Deploy Latest ML_API
+name: Deploy Latest Personal Website
 
 on:
   workflow_dispatch:
