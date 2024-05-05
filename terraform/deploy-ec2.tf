@@ -40,7 +40,7 @@ resource "aws_instance" "example" {
 
 variable "AWS_ACCESS_KEY_ID" {}
 variable "AWS_SECRET_ACCESS_KEY" {}
-variable "EC2_SSH" {}
+# variable "EC2_SSH" {}
 
 output "ec2_instance_ip" {
   value = aws_instance.example.public_ip
