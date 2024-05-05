@@ -37,7 +37,7 @@ jobs:
       - name: Install Node.js and npm
         uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: '18.13'
           
       - name: Install Angular CLI
         run: npm install -g @angular/cli
@@ -52,19 +52,19 @@ jobs:
         run: sleep 10s
         shell: bash
 
-    #   - name: Adding Known Hosts
-    #     run: |
-    #       mkdir -p ~/.ssh
-    #       echo "${{ secrets.EC2_PRIVATE_SSH }}" >> ~/.ssh/id_rsa
-    #       chmod 700 ~/.ssh/id_rsa
-    #       echo "whats this? ${{steps.terraform_init.outputs.ec2_instance_ip}}"
-    #       ssh-keyscan -H ${{steps.terraform_init.outputs.ec2_instance_ip}} >> ~/.ssh/known_hosts
-    #   - name: Decrypt config
-    #     run: | 
-    #       echo "${{ secrets.AGE_PRIVATE_KEY_FILE }}" >> ./ML_API/key.txt
-    #       cd ML_API
-    #       age --decrypt -i key.txt EncryptedSecrets/env_secrets.age > env_secrets.py
-    #       ls
-    #   - name: Rsync ML_API to host
-    #     run: 
-    #       rsync -aHP -r ./ML_API ${{ secrets.EC2_USER }}@${{ steps.terraform_init.outputs.ec2_instance_ip }}:/home/${{ secrets.EC2_USER }}
+      - name: Adding Known Hosts
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_PRIVATE_SSH }}" >> ~/.ssh/id_rsa
+          chmod 700 ~/.ssh/id_rsa
+          echo "whats this? ${{steps.terraform_init.outputs.ec2_instance_ip}}"
+          ssh-keyscan -H ${{steps.terraform_init.outputs.ec2_instance_ip}} >> ~/.ssh/known_hosts
+      - name: Decrypt config
+        run: | 
+          echo "${{ secrets.AGE_PRIVATE_KEY_FILE }}" >> ./ML_API/key.txt
+          cd ML_API
+          age --decrypt -i key.txt EncryptedSecrets/env_secrets.age > env_secrets.py
+          ls
+      - name: Rsync ML_API to host
+        run: 
+          rsync -aHP -r ./dist/ ${{ secrets.EC2_USER }}@${{ steps.terraform_init.outputs.ec2_instance_ip }}:/home/${{ secrets.EC2_USER }}
