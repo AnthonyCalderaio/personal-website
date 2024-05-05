@@ -27,14 +27,30 @@ jobs:
           echo "heres the host"
           echo ::set-output name=ec2_instance_ip::$(terraform output ec2_instance_ip | sed 's/"//g')
 
+      # Angular Environment Setup
+
       - name: Checkout Repo
         uses: actions/checkout@v2
         with: 
           path: git@github.com:AnthonyCalderaio/personal-website.git
 
-    #   - name: Wait for 10 seconds
-    #     run: sleep 10s
-    #     shell: bash
+      - name: Install Node.js and npm
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+          
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli
+        
+      - name: Install dependencies
+        run: npm install
+        
+      - name: Build Angular Project
+        run: ng build --prod
+
+      - name: Wait for 10 seconds
+        run: sleep 10s
+        shell: bash
 
     #   - name: Adding Known Hosts
     #     run: |
