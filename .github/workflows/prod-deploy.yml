@@ -46,7 +46,7 @@ jobs:
         run: npm install
         
       - name: Build Angular Project
-        run: npm run build
+        run: ls -a
 
       - name: Wait for 10 seconds
         run: sleep 10s
