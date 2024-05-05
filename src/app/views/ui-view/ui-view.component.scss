@@ -9,8 +9,7 @@
 
 img {
     height: 100%;
-    width: 300px;
-    cursor: pointer;
+    width: 400px;
 }
 
 .card-format {
@@ -35,4 +34,9 @@ img {
 
 .card-description {
     text-align: center;
+}
+
+.links {
+    display: flex;
+    justify-content: space-evenly;
 }

@@ -1,0 +1,45 @@
+<div class="ui-view-container">
+  <div class="cards-container">
+      <div class="card-format">
+          <div class="card-text-container">
+              <p class="card-title">{{cardData.title}}</p>
+              <p class="card-description">{{cardData.description}}</p>
+              <ng-container [ngSwitch]="cardData.type">
+                <ng-container *ngSwitchCase="'input'" [ngTemplateOutlet]="inputType"></ng-container>
+                <ng-container *ngSwitchCase="'display'" [ngTemplateOutlet]="displayType"></ng-container>
+                <ng-container *ngSwitchCase="'upload'" [ngTemplateOutlet]="uploadType"></ng-container>
+              </ng-container>
+              <ng-template #loading>
+                  <app-loading-indicator [loading]="!cardData?.response" class="prediction"></app-loading-indicator>
+              </ng-template>
+              <p></p>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- - - templates -->
+<!-- - ML -->
+<!-- Input -->
+<ng-template #inputType>
+  <div  class="interactive-area">
+    <div>
+      <p>{{ responseData$ | async }}</p> 
+    </div>
+    <input [id]="cardData.id+'-input'" type="text" placeholder="Enter a comment">
+    <button (click)="fetchData()" class="input-type-button">Predict</button>
+  </div>
+</ng-template>
+
+<!-- Upload -->
+<ng-template #uploadType>
+  <!-- <div *ngIf="cardData.id === 'fake_or_not'" class="interactive-area"> -->
+      <input [id]="cardData.id+'-uploader'" type="file" (change)="onChange($event)"/>
+      <button (click)="onUpload()">Upload</button>
+</ng-template>
+
+
+<!-- Display -->
+<ng-template #displayType>
+  <img [src]="cardData.plot" alt="Image">
+</ng-template >
