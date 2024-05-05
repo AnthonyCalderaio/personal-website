@@ -13,9 +13,9 @@ import { Observable } from 'rxjs';
 })
 export class ProjectCardComponent {
   @Input() cardData: any;
-  @Input() cardType: string;
+  @Input() cardType!: string;
 
-  responseData$: Observable<any>;
+  responseData$!: Observable<any>;
 
   uploadedFile: any;
 
