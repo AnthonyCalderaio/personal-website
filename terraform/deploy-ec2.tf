@@ -8,21 +8,6 @@ provider "aws" {
 }
 
 
- resource "aws_security_group" "example_sg2" {
-   name        = "allow-outbound-1"
-   description = "Allow inbound traffic on port 5000"
-
-  ingress {
-    from_port   = 5000
-    to_port     = 5000
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]  # Allow traffic from all IP addresses. Adjust as needed.
- }
-
-  // Add more ingress rules as necessary
-}
-
-
 # Create the EC2 instance and associate it with the new security group
 resource "aws_instance" "example" {
   ami           = "ami-04e5276ebb8451442"
