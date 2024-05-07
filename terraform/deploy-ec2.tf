@@ -23,6 +23,16 @@ resource "aws_instance" "example" {
   # user_data = "${file("setup.sh")}"
 }
 
+# Need this to grab ML_IP from aws_eip
+data "aws_eip" "Personal_Website_IP" {
+  # Configuration to fetch the Elastic IP information
+}
+
+resource "aws_eip_association" "Personal_Website_IP" {
+  instance_id   = aws_instance.example.id
+  allocation_id = data.aws_eip.Personal_Website_IP.id
+}
+
 variable "AWS_ACCESS_KEY_ID" {}
 variable "AWS_SECRET_ACCESS_KEY" {}
 # variable "EC2_SSH" {}
