@@ -23,9 +23,13 @@ resource "aws_instance" "example" {
   # user_data = "${file("setup.sh")}"
 }
 
-# Need this to grab ML_IP from aws_eip
+# Grab EIP from AWS
 data "aws_eip" "Personal_Website_IP" {
   # Configuration to fetch the Elastic IP information
+  filter {
+    name   = "tag:Name"
+    values = ["Personal_Website_IP"]
+  }
 }
 
 resource "aws_eip_association" "Personal_Website_IP" {
