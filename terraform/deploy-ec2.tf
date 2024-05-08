@@ -23,6 +23,8 @@ resource "aws_instance" "example" {
   # user_data = "${file("setup.sh")}"
 }
 
+######### EIP Config
+
 # Grab EIP from AWS
 data "aws_eip" "Personal_Website_IP" {
   # Configuration to fetch the Elastic IP information
@@ -37,11 +39,35 @@ resource "aws_eip_association" "Personal_Website_IP" {
   allocation_id = data.aws_eip.Personal_Website_IP.id
 }
 
+
+######### Run script
+
+resource "null_resource" "run_script" {
+  connection {
+    type        = "ssh"
+    host        = aws_instance.example.public_ip
+    user        = "ec2-user"  # or the appropriate SSH user for your EC2 instance
+    private_key = file("~/.ssh/private_key.pem")  # Path to the private key file
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "chmod +x /scripts/build_script.sh",  # Make the script executable
+      "/scripts/build_script.sh"            # Execute the script
+    ]
+  }
+
+  depends_on = [aws_instance.example]
+}
+######### Variables
+
 variable "AWS_ACCESS_KEY_ID" {}
 variable "AWS_SECRET_ACCESS_KEY" {}
 # variable "EC2_SSH" {}
 
 
+
+######### Outputs
 # Natural instance IP. Disable when using elastic
 #output "ec2_instance_ip" {
   #value = aws_instance.example.public_ip

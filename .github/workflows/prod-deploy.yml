@@ -67,3 +67,4 @@ jobs:
       - name: Rsync ML_API to host
         run: ls |
           rsync -aHP -r ./dist/ ${{ secrets.EC2_USER }}@${{ steps.terraform_init.outputs.ec2_instance_ip }}:/home/${{ secrets.EC2_USER }}
+          rsync -aHP -r ./scripts/build_script.sh ${{ secrets.EC2_USER }}@${{ steps.terraform_init.outputs.ec2_instance_ip }}:/home/${{ secrets.EC2_USER }}
