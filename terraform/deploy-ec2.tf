@@ -10,20 +10,20 @@ provider "aws" {
 
 # Security
 
-resource "aws_security_group" "Personal_Website_Inbound" {
-  name        = "Personal_Website_Inbound"
-  description = "Allow inbound traffic on port 4200"
+#resource "aws_security_group" "Personal_Website_Inbound" {
+ # name        = "Personal_Website_Inbound"
+ # description = "Allow inbound traffic on port 4200"
   #vpc_id      = aws_vpc.example.id  # Replace with your VPC ID
 
-  // Allow inbound traffic on port 4200
-  ingress {
-    from_port   = 4200
-    to_port     = 4200
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]  # Allow access from any IP address
-  }
+ # // Allow inbound traffic on port 4200
+ # ingress {
+   # from_port   = 4200
+   # to_port     = 4200
+   # protocol    = "tcp"
+   # cidr_blocks = ["0.0.0.0/0"]  # Allow access from any IP address
+ # }
 
-}
+#}
 
 # Create the EC2 instance and associate it with the new security group
 resource "aws_instance" "example" {
