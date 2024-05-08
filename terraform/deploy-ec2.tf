@@ -11,9 +11,9 @@ provider "aws" {
 # Security
 
 resource "aws_security_group" "Personal_Website_Inbound" {
-  name        = "ePersonal_Website_Inbound"
+  name        = "Personal_Website_Inbound"
   description = "Allow inbound traffic on port 4200"
-  vpc_id      = aws_vpc.example.id  # Replace with your VPC ID
+  #vpc_id      = aws_vpc.example.id  # Replace with your VPC ID
 
   // Allow inbound traffic on port 4200
   ingress {
