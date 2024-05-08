@@ -16,6 +16,12 @@ jobs:
       - uses: hashicorp/setup-terraform@v1
         with:
           terraform_wrapper: false
+      
+      # Create private key for terraform build
+      - name: Fetch SSH private key
+        run: echo "${{ secrets.EC2_PRIVATE_SSH }}" > ~/.ssh/private_key.pem
+      - name: Set file permissions
+        run: chmod 600 ~/.ssh/private_key.pem
 
       - name: Terraform Init and Apply AKA Initialize EC2 instance
         id: terraform_init
