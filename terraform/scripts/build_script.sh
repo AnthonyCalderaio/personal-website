@@ -14,4 +14,4 @@ sudo npm install -g http-server &&
 
 #3) serve:
 cd /home/ec2-user/personal-website/browser &&
-http-server -p 8080
+http-server -p 8080 -a 0.0.0.0
