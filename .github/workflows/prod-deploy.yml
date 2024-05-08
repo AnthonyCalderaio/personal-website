@@ -74,6 +74,8 @@ jobs:
         run: ls |
           rsync -aHP -r ./dist/ ${{ secrets.EC2_USER }}@${{ steps.terraform_init.outputs.ec2_instance_ip }}:/home/${{ secrets.EC2_USER }} 
 
+      - name: List files
+        run: ls
+
       - name: Run deploy script and start server
-        run: ls |
-          ssh -o "StrictHostKeyChecking=no" ${{ secrets.EC2_USER }}@${{ steps.terraform_init.outputs.ec2_instance_ip }} 'bash -s' < /scripts/build_script.sh
+        run: ssh -o "StrictHostKeyChecking=no" ${{ secrets.EC2_USER }}@${{ steps.terraform_init.outputs.ec2_instance_ip }} 'bash -s' < /scripts/build_script.sh
