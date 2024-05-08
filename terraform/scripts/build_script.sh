@@ -14,5 +14,5 @@ sudo npm install -g http-server &&
 
 #3) serve:
 cd /home/ec2-user/personal-website/browser &&
-nohup http-server -p 4200 -a 0.0.0.0
+nohup http-server -p 4200 -a 0.0.0.0 >/dev/null 2>&1 &
 ## Check with $ps aux | grep http-server
