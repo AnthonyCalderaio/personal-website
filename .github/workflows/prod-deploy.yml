@@ -18,10 +18,10 @@ jobs:
           terraform_wrapper: false
       
       # Create private key for terraform build
-      - name: Fetch SSH private key
-        run: echo "${{ secrets.EC2_PRIVATE_SSH }}" > ~/.ssh/private_key.pem
-      - name: Set file permissions
-        run: chmod 600 ~/.ssh/private_key.pem
+      # - name: Fetch SSH private key
+      #   run: echo "${{ secrets.EC2_PRIVATE_SSH }}" > ~/.ssh/private_key.pem
+      # - name: Set file permissions
+      #   run: chmod 600 ~/.ssh/private_key.pem
 
       - name: Terraform Init and Apply AKA Initialize EC2 instance
         id: terraform_init
@@ -72,5 +72,8 @@ jobs:
 
       - name: Rsync ML_API to host
         run: ls |
-          rsync -aHP -r ./dist/ ${{ secrets.EC2_USER }}@${{ steps.terraform_init.outputs.ec2_instance_ip }}:/home/${{ secrets.EC2_USER }}
-          rsync -aHP -r ./scripts/build_script.sh ${{ secrets.EC2_USER }}@${{ steps.terraform_init.outputs.ec2_instance_ip }}:/home/${{ secrets.EC2_USER }}
+          rsync -aHP -r ./dist/ ${{ secrets.EC2_USER }}@${{ steps.terraform_init.outputs.ec2_instance_ip }}:/home/${{ secrets.EC2_USER }} 
+
+      - name: Run deploy script and start server
+        run: ls |
+          ssh -o "StrictHostKeyChecking=no" ${{ secrets.EC2_USER }}@${{ steps.terraform_init.outputs.ec2_instance_ip }} 'bash -s' < /scripts/build_script.sh

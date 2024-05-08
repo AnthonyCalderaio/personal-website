@@ -42,23 +42,23 @@ resource "aws_eip_association" "Personal_Website_IP" {
 
 ######### Run script
 
-resource "null_resource" "run_script" {
-  connection {
-    type        = "ssh"
-    host        = aws_instance.example.public_ip
-    user        = "ec2-user"  # or the appropriate SSH user for your EC2 instance
-    private_key = file("~/.ssh/private_key.pem")  # Path to the private key file
-  }
+# resource "null_resource" "run_script" {
+  #connection {
+    #type        = "ssh"
+    #host        = aws_instance.example.public_ip
+    #user        = "ec2-user"  # or the appropriate SSH user for your EC2 instance
+    #private_key = file("~/.ssh/private_key.pem")  # Path to the private key file
+  #}
 
-  provisioner "remote-exec" {
-    inline = [
-      "chmod +x /scripts/build_script.sh",  # Make the script executable
-      "/scripts/build_script.sh"            # Execute the script
-    ]
-  }
+  #provisioner "remote-exec" {
+    #inline = [
+      #"chmod +x /scripts/build_script.sh",  # Make the script executable
+      #"/scripts/build_script.sh"            # Execute the script
+    #]
+  #}
 
-  depends_on = [aws_instance.example]
-}
+  #depends_on = [aws_instance.example]
+#}
 ######### Variables
 
 variable "AWS_ACCESS_KEY_ID" {}
