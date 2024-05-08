@@ -8,12 +8,29 @@ provider "aws" {
 }
 
 
+# Security
+
+resource "aws_security_group" "Personal_Website_Inbound" {
+  name        = "ePersonal_Website_Inbound"
+  description = "Allow inbound traffic on port 4200"
+  vpc_id      = aws_vpc.example.id  # Replace with your VPC ID
+
+  // Allow inbound traffic on port 4200
+  ingress {
+    from_port   = 4200
+    to_port     = 4200
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]  # Allow access from any IP address
+  }
+
+}
+
 # Create the EC2 instance and associate it with the new security group
 resource "aws_instance" "example" {
   ami           = "ami-04e5276ebb8451442"
   instance_type = "t2.micro"
   key_name      = "04_23_2024_key"
-  security_groups = ["allow_ssh","allow_outbound", "allow-outbound-1"]
+  security_groups = ["allow_ssh","allow_outbound", "aws_security_group.Personal_Website_Inbound.name"]
 
   tags = {
     Name = "Personal Website"
@@ -39,26 +56,6 @@ resource "aws_eip_association" "Personal_Website_IP" {
   allocation_id = data.aws_eip.Personal_Website_IP.id
 }
 
-
-######### Run script
-
-# resource "null_resource" "run_script" {
-  #connection {
-    #type        = "ssh"
-    #host        = aws_instance.example.public_ip
-    #user        = "ec2-user"  # or the appropriate SSH user for your EC2 instance
-    #private_key = file("~/.ssh/private_key.pem")  # Path to the private key file
-  #}
-
-  #provisioner "remote-exec" {
-    #inline = [
-      #"chmod +x /scripts/build_script.sh",  # Make the script executable
-      #"/scripts/build_script.sh"            # Execute the script
-    #]
-  #}
-
-  #depends_on = [aws_instance.example]
-#}
 ######### Variables
 
 variable "AWS_ACCESS_KEY_ID" {}
