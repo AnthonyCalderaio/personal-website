@@ -18,14 +18,14 @@ export class MachineLearningComponent implements OnInit {
   baseUrl = environment.apiBaseUrl;
 
   mlCards: any = [
-    {
-      title: 'NVIDIA Stock Predictor',
-      imgLink: this.baseUrl + '/nvidia_prediction',
-      description: 'Random Forest alrorithm to predict the cost of the NVIDA stock price today. ',
-      plot: undefined,
-      id: 'nvidia_stock_predictor',
-      type: 'display'
-    },
+    // {
+    //   title: 'NVIDIA Stock Predictor',
+    //   imgLink: this.baseUrl + '/nvidia_prediction',
+    //   description: 'Random Forest alrorithm to predict the cost of the NVIDA stock price today. ',
+    //   plot: undefined,
+    //   id: 'nvidia_stock_predictor',
+    //   type: 'display'
+    // },
     {
       title: 'Fake or Not',
       description: 'Enter a comment for an item and the trained model will tell you if its fake or not.',
