@@ -30,7 +30,9 @@ resource "aws_instance" "example" {
   ami           = "ami-04e5276ebb8451442"
   instance_type = "t2.micro"
   key_name      = "04_23_2024_key"
-  security_groups = ["allow_ssh","allow_outbound", "Personal_Website_Inbound", "SSL_Group_Port_80"]
+  security_groups = ["allow_ssh", "allow_outbound", "Personal_Website_Inbound" ]
+
+  # "SSL_Group_Port_80"
 
   tags = {
     Name = "Personal Website"
