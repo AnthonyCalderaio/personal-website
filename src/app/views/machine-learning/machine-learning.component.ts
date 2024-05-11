@@ -4,6 +4,7 @@ import { LoadingIndicatorComponent } from '../../widgets/loading-indicator/loadi
 import { DomSanitizer } from '@angular/platform-browser';
 import { ProjectCardComponent } from '../../templates/project-card/project-card.component';
 import { LinkService } from '../../services/link.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-machine-learning',
@@ -13,8 +14,8 @@ import { LinkService } from '../../services/link.service';
   styleUrl: './machine-learning.component.scss'
 })
 export class MachineLearningComponent implements OnInit {
-  local = true;
-  baseUrl = this.local ? 'http://127.0.0.1:5000' : 'https://ml-api-5igq.onrender.com';
+
+  baseUrl = environment.apiBaseUrl;
 
   mlCards: any = [
     {

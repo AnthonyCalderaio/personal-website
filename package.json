@@ -6,8 +6,10 @@
     "serve proxy": "ng serve --proxy-config src/proxy.conf.json",
     "start": "ng serve",
     "build": "ng build",
+    "build:prod": "ng build --configuration=production",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "start:prod": "ng serve --configuration=production"
   },
   "private": true,
   "dependencies": {
