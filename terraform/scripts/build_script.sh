@@ -13,7 +13,7 @@ sudo yum install nodejs -y
 sudo npm install -g http-server
 
 #3) serve:
-&& cd /home/ec2-user/personal-website/browser
+&& cd /home/ec2-user/personal-website/browser &&
 nohup http-server -p 80 -a 0.0.0.0 >/dev/null 2>&1 || true &
 
 # nohup http-server -p 80 -a 0.0.0.0 >/dev/null 2>&1 || true &
