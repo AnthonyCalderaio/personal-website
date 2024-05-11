@@ -14,7 +14,6 @@ provider "aws" {
  # name        = "Personal_Website_Inbound"
  # description = "Allow inbound traffic on port 4200"
   #vpc_id      = aws_vpc.example.id  # Replace with your VPC ID
-
  # // Allow inbound traffic on port 4200
  # ingress {
    # from_port   = 4200
@@ -22,15 +21,40 @@ provider "aws" {
    # protocol    = "tcp"
    # cidr_blocks = ["0.0.0.0/0"]  # Allow access from any IP address
  # }
-
 #}
+
+
+
+########################
+# Define security group for HTTP server
+resource "aws_security_group" "http_server_sg" {
+  name        = "http-server-sg"
+  description = "Security group for HTTP server"
+
+  # Inbound rule for HTTP traffic
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]  # Allow traffic from any source IP address
+  }
+
+  # Outbound rule to allow all traffic
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"  # All protocols
+    cidr_blocks = ["0.0.0.0/0"]  # Allow traffic to any destination IP address
+  }
+}
+########################
 
 # Create the EC2 instance and associate it with the new security group
 resource "aws_instance" "example" {
   ami           = "ami-04e5276ebb8451442"
   instance_type = "t2.micro"
   key_name      = "04_23_2024_key"
-  security_groups = ["allow_ssh", "allow_outbound", "Personal_Website_Inbound" ]
+  security_groups = ["allow_ssh", "allow_outbound", "Personal_Website_Inbound", "http-server-sg" ]
 
   # "SSL_Group_Port_80"
 
