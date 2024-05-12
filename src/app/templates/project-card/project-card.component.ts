@@ -2,6 +2,7 @@ import { CommonModule, NgTemplateOutlet } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { LoadingIndicatorComponent } from '../../widgets/loading-indicator/loading-indicator.component';
 import { LinkService } from '../../services/link.service';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -19,7 +20,7 @@ export class ProjectCardComponent {
 
   uploadedFile: any;
 
-  constructor(public linkService: LinkService) { }
+  constructor(public linkService: LinkService, private sanitizer: DomSanitizer) { }
 
   @Input() test: any;
 
@@ -48,6 +49,14 @@ export class ProjectCardComponent {
 
   onChange(event: any) {
     this.uploadedFile = event?.target?.files[0];
+  }
+
+  openUrl(url: string){
+    window.open(url, '_blank');
+  }
+
+  sanitizeUrl(url: string){
+      return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
 }

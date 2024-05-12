@@ -1,20 +1,20 @@
 <div class="ui-view-container">
   <div class="cards-container">
-      <div class="card-format">
-          <div class="card-text-container">
-              <p class="card-title">{{cardData.title}}</p>
-              <p class="card-description">{{cardData.description}}</p>
-              <ng-container [ngSwitch]="cardData.type">
-                <ng-container *ngSwitchCase="'input'" [ngTemplateOutlet]="inputType"></ng-container>
-                <ng-container *ngSwitchCase="'display'" [ngTemplateOutlet]="displayType"></ng-container>
-                <ng-container *ngSwitchCase="'upload'" [ngTemplateOutlet]="uploadType"></ng-container>
-              </ng-container>
-              <ng-template #loading>
-                  <app-loading-indicator [loading]="!cardData?.response" class="prediction"></app-loading-indicator>
-              </ng-template>
-              <p></p>
-          </div>
+    <div class="card-format">
+      <div class="card-text-container">
+        <ng-container [ngSwitch]="cardData.type">
+          <ng-container *ngSwitchCase="'input'" [ngTemplateOutlet]="inputType"></ng-container>
+          <ng-container *ngSwitchCase="'plot'" [ngTemplateOutlet]="plotType"></ng-container>
+          <ng-container *ngSwitchCase="'display'" [ngTemplateOutlet]="displayType"></ng-container>
+          <ng-container *ngSwitchCase="'upload'" [ngTemplateOutlet]="uploadType"></ng-container>
+          <ng-container *ngSwitchCase="'preview'" [ngTemplateOutlet]="previewType"></ng-container>
+        </ng-container>
+        <ng-template #loading>
+          <app-loading-indicator [loading]="!cardData?.response" class="prediction"></app-loading-indicator>
+        </ng-template>
+        <p></p>
       </div>
+    </div>
   </div>
 </div>
 
@@ -22,9 +22,11 @@
 <!-- - ML -->
 <!-- Input -->
 <ng-template #inputType>
-  <div  class="interactive-area">
+  <p class="card-title">{{cardData.title}}</p>
+  <p class="card-description">{{cardData.description}}</p>
+  <div class="interactive-area">
     <div>
-      <p>{{ responseData$ | async }}</p> 
+      <p>{{ responseData$ | async }}</p>
     </div>
     <input [id]="cardData.id+'-input'" type="text" placeholder="Enter a comment">
     <button (click)="fetchData()" class="input-type-button">Predict</button>
@@ -33,13 +35,33 @@
 
 <!-- Upload -->
 <ng-template #uploadType>
-  <!-- <div *ngIf="cardData.id === 'fake_or_not'" class="interactive-area"> -->
-      <input [id]="cardData.id+'-uploader'" type="file" (change)="onChange($event)"/>
-      <button (click)="onUpload()">Upload</button>
+  <p class="card-title">{{cardData.title}}</p>
+  <p class="card-description">{{cardData.description}}</p>
+  <input [id]="cardData.id+'-uploader'" type="file" (change)="onChange($event)" />
+  <button (click)="onUpload()">Upload</button>
 </ng-template>
-
 
 <!-- Display -->
 <ng-template #displayType>
-  <img [src]="cardData.plot" alt="Image">
-</ng-template >
+  <p class="card-title">{{cardData.title}}</p>
+  <div class="display-type-contents">
+    <div class="left-side">
+      <img [src]="cardData.img" alt="Image" class="clickable">
+      <span *ngFor="let link of cardData.links" class="center-text">
+        <span (click)="openUrl(cardData.link)" class="clickable link">{{link.title}}</span></span>
+    </div>
+    <div class="display-type-verbiage-contents">
+      <p class="card-description">{{cardData.description}}</p>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Plot -->
+<ng-template #plotType>
+  <img [src]="cardData.plot" alt="Image" class="clickable">
+</ng-template>
+
+<!-- Preview -->
+<ng-template #previewType>
+  <iframe [src]="sanitizeUrl(cardData?.url)" width="100%" height="600px" frameborder="0"></iframe>
+</ng-template>

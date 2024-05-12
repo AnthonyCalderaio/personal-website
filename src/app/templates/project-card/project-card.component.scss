@@ -9,7 +9,6 @@
 img {
     height: 100%;
     width: 300px;
-    cursor: pointer;
 }
 
 .card-format {
@@ -51,4 +50,31 @@ img {
 
 .input-type-button {
     height: 100%; width: 85px;
+}
+
+.display-type-contents {
+    display: flex;
+    flex-direction: row;
+}
+
+.display-type-verbiage-contents {
+    display: flex;
+    flex-direction: column;
+}
+
+.center-text {
+    text-align: center;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.link {
+    color: yellow;
+}
+
+.left-side {
+    display: flex;
+    flex-direction: column;
 }
