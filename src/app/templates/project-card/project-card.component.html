@@ -8,6 +8,7 @@
           <ng-container *ngSwitchCase="'display'" [ngTemplateOutlet]="displayType"></ng-container>
           <ng-container *ngSwitchCase="'upload'" [ngTemplateOutlet]="uploadType"></ng-container>
           <ng-container *ngSwitchCase="'preview'" [ngTemplateOutlet]="previewType"></ng-container>
+          <ng-container *ngSwitchCase="'ModelResult'" [ngTemplateOutlet]="resultType"></ng-container>
         </ng-container>
         <ng-template #loading>
           <app-loading-indicator [loading]="!cardData?.response" class="prediction"></app-loading-indicator>
@@ -31,6 +32,8 @@
     <input [id]="cardData.id+'-input'" type="text" placeholder="Enter a comment">
     <button (click)="fetchData()" class="input-type-button">Predict</button>
   </div>
+  <ng-container *ngTemplateOutlet="linkList; context: {links:cardData.links}">
+  </ng-container>
 </ng-template>
 
 <!-- Upload -->
@@ -39,6 +42,8 @@
   <p class="card-description">{{cardData.description}}</p>
   <input [id]="cardData.id+'-uploader'" type="file" (change)="onChange($event)" />
   <button (click)="onUpload()">Upload</button>
+  <ng-container *ngTemplateOutlet="linkList; context: {links:cardData.links}">
+  </ng-container>
 </ng-template>
 
 <!-- Display -->
@@ -47,8 +52,8 @@
   <div class="display-type-contents">
     <div class="left-side">
       <img [src]="cardData.img" alt="Image" class="clickable">
-      <span *ngFor="let link of cardData.links" class="center-text">
-        <span (click)="openUrl(cardData.link)" class="clickable link">{{link.title}}</span></span>
+      <ng-container *ngTemplateOutlet="linkList; context: {links:cardData.links}">
+      </ng-container>
     </div>
     <div class="display-type-verbiage-contents">
       <p class="card-description">{{cardData.description}}</p>
@@ -64,4 +69,23 @@
 <!-- Preview -->
 <ng-template #previewType>
   <iframe [src]="sanitizeUrl(cardData?.url)" width="100%" height="600px" frameborder="0"></iframe>
+</ng-template>
+
+<!-- Results -->
+<ng-template #resultType>
+  <p class="card-title">{{cardData.title}}</p>
+  <div style="padding: 20px;">
+    <pre *ngFor="let result of cardData.results" class="result-item center-text">{{result}}</pre>
+  </div>
+  <ng-container *ngTemplateOutlet="linkList; context: {links:cardData.links}">
+  </ng-container>
+</ng-template>
+
+
+<!-- - Misc -->
+<ng-template #linkList let-links="links">
+  <br>
+  <span *ngFor="let linkObject of links" class="center-text">
+    <span (click)="openUrl(linkObject.link)" class="clickable link">{{linkObject.title}}</span>
+  </span>
 </ng-template>
